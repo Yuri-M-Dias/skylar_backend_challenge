@@ -18,7 +18,7 @@ def subscribe(request):
             'sender': 'Dio',
             'message': message
         })
-    return JsonResponse(None)
+    return JsonResponse()
     #return render(request, 'skylar_challenge/index.html', {})
 
 

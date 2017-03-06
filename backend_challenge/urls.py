@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+from backend_challenge import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^redis/', include('skylar_challenge.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns()

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +24,7 @@
 
 <footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="application/javascript" src="/static/skylar_challenge/js/app.js"></script>
+    <script src="{% static "skylar_challenge/../../static/js/app.js" %}"></script>
 </footer>
 </body>
 </html>
