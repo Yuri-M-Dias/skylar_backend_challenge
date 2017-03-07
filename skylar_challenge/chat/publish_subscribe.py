@@ -29,8 +29,8 @@ class ChatRedis:
                 timer = timer_max
             else:
                 timer += 1
-                print('Sleeping %s' % timer)
-                time.sleep(1)
+                # print('Sleeping %s' % timer)
+                time.sleep(0.1)
 
         self.pub_sub.unsubscribe(channel)
         if message is not None:

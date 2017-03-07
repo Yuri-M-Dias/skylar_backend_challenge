@@ -13,7 +13,7 @@ $(document).ready(function () {
 function displayMessage(data) {
     $('#chat').append(
         '<p>' +
-        '<span>Sender: ' + data['sender'] + '</span>  ' +
+        '<span><b>' + data['sender'] + ':</b></span>  ' +
         '<span>' + data['message'] + '</span>' +
         '</p>'
     );
