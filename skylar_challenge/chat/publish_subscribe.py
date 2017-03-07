@@ -1,3 +1,5 @@
+import time
+
 from skylar_challenge.db.redis import redis_connection
 
 
@@ -18,7 +20,19 @@ class ChatRedis:
 
     def receive(self, channel=CHANNEL_NAME):
         self.pub_sub.subscribe(channel)
-        message = self.pub_sub.get_message(timeout=10)
+        timer_max = 30
+        timer = 0
+        message = None
+        while timer < timer_max:
+            message = self.pub_sub.get_message(ignore_subscribe_messages=True)
+            if message is not None:
+                timer = timer_max
+            else:
+                timer += 1
+                print('Sleeping %s' % timer)
+                time.sleep(1)
+
+        self.pub_sub.unsubscribe(channel)
         if message is not None:
             return message['data']
         return None

@@ -8,26 +8,29 @@ def index(request):
     return render(request, 'skylar_challenge/index.html', {})
 
 
+def format_message(message, author='Dio'):
+    if message is None:
+        return None
+    return {
+        'sender': author,
+        'message': message.decode('UTF-8')
+    }
+
+
 # TODO: redis subscribe
 def subscribe(request):
     pub_sub = publish_subscribe.ChatRedis()
     message = pub_sub.receive()
-    if message is not None:
-        # TODO: parse message
-        return JsonResponse({
-            'sender': 'Dio',
-            'message': message
-        })
-    return JsonResponse()
-    #return render(request, 'skylar_challenge/index.html', {})
+    formated_message = format_message(message)
+    return JsonResponse(formated_message, safe=False)
 
 
 # TODO: redis publish
 def publish(request):
     pub_sub = publish_subscribe.ChatRedis()
-    sended_to = pub_sub.send('something')
+    sended_to = pub_sub.send('something'.encode('UTF-8'))
     if sended_to > 1:
         # What do?
         print("Sended to: ", sended_to)
     return JsonResponse({'listening': sended_to})
-    #return render(request, 'skylar_challenge/index.html', {})
+    # return render(request, 'skylar_challenge/index.html', {})

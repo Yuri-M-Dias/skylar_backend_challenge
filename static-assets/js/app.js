@@ -11,7 +11,12 @@ $(document).ready(function () {
 });
 
 function displayMessage(data) {
-    $('#chat').append('<p>'+ data +'</span>');
+    $('#chat').append(
+        '<p>' +
+        '<span>Sender: ' + data['sender'] + '</span>  ' +
+        '<span>' + data['message'] + '</span>' +
+        '</p>'
+    );
     console.log(['displayMessage', data]);
 }
 
@@ -43,19 +48,22 @@ function sendMessage(message) {
 
 function pollMessages() {
     var serverTimeout = 0;
+    var self = this;
 
     $.ajax({
         url: getCurrentURL() + '/subscribe',
         dataType: 'json',
         success: function (data) {
-            displayMessage(data);
-            serverTimeout = 0;
+            if(data !== null && data !== void 0){
+                displayMessage(data);
+            }
+            self.serverTimeout = 0;
         },
         error: function (data) {
-            serverTimeout = 5000;
+            self.serverTimeout = 5000;
         },
         complete: function () {
-            setTimeout(pollMessages, serverTimeout);
+            setTimeout(pollMessages, self.serverTimeout);
         }
     });
 }
